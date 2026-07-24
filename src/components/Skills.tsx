@@ -1,0 +1,48 @@
+import { motion } from "framer-motion";
+import { skills } from "../data/content";
+
+const groups = [
+  { title: "Languages", items: skills.languages },
+  { title: "AI / ML Frameworks", items: skills.frameworks },
+  { title: "Backend & Cloud", items: skills.backend },
+  { title: "Full-Stack & Data", items: skills.fullstack },
+  { title: "Concepts", items: skills.concepts },
+];
+
+export default function Skills() {
+  return (
+    <section id="skills" className="relative mx-auto max-w-6xl px-6 py-28">
+      <p className="font-mono text-xs uppercase tracking-[0.3em] text-signal">02 — Stack</p>
+      <h2 className="mt-4 max-w-lg font-display text-3xl leading-tight tracking-tight sm:text-4xl">
+        What's under the hood
+      </h2>
+
+      <div className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {groups.map((g, i) => (
+          <motion.div
+            key={g.title}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.5, delay: i * 0.06 }}
+            className="glass group rounded-2xl p-6 transition-colors hover:border-signal/40"
+          >
+            <p className="font-mono text-xs uppercase tracking-wider text-ink-faint">
+              {g.title}
+            </p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {g.items.map((s) => (
+                <span
+                  key={s}
+                  className="rounded-full border border-line px-3 py-1 text-xs text-ink-dim transition-colors group-hover:border-line"
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+}
