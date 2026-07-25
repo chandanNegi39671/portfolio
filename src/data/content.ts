@@ -181,12 +181,6 @@ export type Certification = {
 
 export const certifications: Certification[] = [
   {
-    name: "Machine Learning & Data Science",
-    issuer: "upGrad — Program Certificate",
-    year: "2025",
-    url: "https://www.upgrad.com/lxp/learner/certificate/program/69037480943812e0566290f0",
-  },
-  {
     name: "Machine Learning with Python — Level 1",
     issuer: "IBM (via Credly)",
     year: "Dec 2025",
