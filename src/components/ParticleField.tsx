@@ -30,8 +30,8 @@ export default function ParticleField() {
     function resize() {
       width = window.innerWidth;
       height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
+      canvas!.width = width;
+      canvas!.height = height;
       const count = Math.min(70, Math.floor((width * height) / 22000));
       particles = Array.from({ length: count }, () => ({
         x: Math.random() * width,

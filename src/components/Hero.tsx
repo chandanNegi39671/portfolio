@@ -16,8 +16,8 @@ export default function Hero() {
       className="relative flex min-h-screen flex-col overflow-hidden pt-24"
     >
       {/* Giant background word */}
-      <div className="pointer-events-none absolute inset-x-0 top-[6%] -z-10 select-none overflow-hidden">
-        <p className="text-gradient whitespace-nowrap text-center font-display text-[22vw] font-bold leading-none tracking-tighter opacity-90 sm:text-[19vw]">
+      <div className="pointer-events-none absolute inset-x-0 top-36 -z-10 select-none overflow-hidden sm:top-40">
+        <p className="text-gradient whitespace-nowrap text-center font-display text-[22vw] font-bold leading-none tracking-tighter opacity-20 sm:text-[19vw]">
           PORTFOLIO
         </p>
       </div>
@@ -25,19 +25,36 @@ export default function Hero() {
       <div className="absolute left-1/2 top-1/4 -z-10 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-signal/10 blur-[140px]" />
 
       {/* Top bar */}
-      <div className="mx-auto flex w-full max-w-6xl items-start justify-between px-6">
-        <div>
-          <p className="font-display text-sm font-semibold uppercase tracking-wide text-signal">
-            AI / ML Engineer
-          </p>
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-ink-faint">
-            Production-grade builder
-          </p>
-        </div>
-        <div className="flex items-center gap-2 text-right font-mono text-xs uppercase tracking-[0.2em] text-ink-faint">
+      <div className="mx-auto flex w-full max-w-6xl flex-wrap items-start justify-between gap-3 px-6">
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="glass inline-flex items-center gap-3 rounded-full border border-signal/40 bg-signal/10 px-4 py-2 shadow-[0_0_30px_rgba(239,68,68,0.2)]"
+        >
+          <span className="relative flex h-2.5 w-2.5 shrink-0">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal opacity-75" />
+            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-signal" />
+          </span>
+          <div className="leading-tight">
+            <p className="font-display text-sm font-bold uppercase tracking-wide text-signal sm:text-base">
+              AI / ML Engineer
+            </p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-ink-dim">
+              Production-grade builder
+            </p>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="glass inline-flex items-center gap-2 rounded-full border border-ember/40 bg-ember/10 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.2em] text-ember shadow-[0_0_30px_rgba(251,146,60,0.15)] sm:text-xs"
+        >
+          <Sparkles size={14} className="animate-pulse-glow text-ember" />
           Open to hackathons &amp; internships
-          <Sparkles size={14} className="text-signal" />
-        </div>
+        </motion.div>
       </div>
 
       {/* Main hero content */}
