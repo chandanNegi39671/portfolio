@@ -9,6 +9,8 @@ import Certifications from "./components/Certifications";
 import Research from "./components/Research";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import Terminal from "./components/Terminal";
+import CommandPalette from "./components/CommandPalette";
 
 export default function App() {
   return (
@@ -67,6 +69,9 @@ export default function App() {
 
         <Footer />
       </div>
+
+      <Terminal />
+      <CommandPalette />
     </div>
   );
 }

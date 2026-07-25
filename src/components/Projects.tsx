@@ -1,13 +1,47 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, Github, ChevronDown } from "lucide-react";
 import { projects, type Project } from "../data/content";
+import GitHubStats from "./GitHubStats";
 
 const accentMap = {
   signal: { text: "text-signal", border: "hover:border-signal/50", glow: "bg-signal/10" },
   plasma: { text: "text-plasma", border: "hover:border-plasma/50", glow: "bg-plasma/10" },
   ember: { text: "text-ember", border: "hover:border-ember/50", glow: "bg-ember/10" },
 };
+
+function HFBadge({ repoId }: { repoId: string }) {
+  const [stats, setStats] = useState<{ likes: number; downloads: number } | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch(`https://huggingface.co/api/models/${repoId}`)
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((d) => {
+        if (!cancelled) setStats({ likes: d.likes ?? 0, downloads: d.downloads ?? 0 });
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [repoId]);
+
+  if (!stats) return null;
+
+  return (
+    <div className="mt-4 flex items-center gap-4 font-mono text-[11px] uppercase tracking-wider text-ink-faint">
+      <span className="flex items-center gap-1.5 text-signal">
+        <span className="relative flex h-1.5 w-1.5">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal opacity-75" />
+          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-signal" />
+        </span>
+        Live from HuggingFace
+      </span>
+      <span>{stats.downloads.toLocaleString()} downloads</span>
+      <span>{stats.likes} likes</span>
+    </div>
+  );
+}
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const [open, setOpen] = useState(false);
@@ -95,6 +129,10 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           ))}
         </div>
 
+        {project.github.includes("huggingface.co/") && (
+          <HFBadge repoId={project.github.split("huggingface.co/")[1]} />
+        )}
+
         <button
           onClick={() => setOpen(!open)}
           className="mt-6 flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-ink-faint transition-colors hover:text-signal"
@@ -141,7 +179,11 @@ export default function Projects() {
         trust, and real-time constraints.
       </p>
 
-      <div className="mt-14 grid gap-8">
+      <div className="mt-14">
+        <GitHubStats />
+      </div>
+
+      <div className="grid gap-8">
         {projects.map((p, i) => (
           <ProjectCard key={p.id} project={p} index={i} />
         ))}

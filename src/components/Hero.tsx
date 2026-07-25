@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowDown, ArrowRight, Download, Sparkles } from "lucide-react";
+import { ArrowDown, ArrowRight, Download, Eye, Sparkles } from "lucide-react";
 import profileImg from "../assets/profile-cutout.png";
 import { profile } from "../data/content";
+import Modal from "./Modal";
 
 const stats = [
   { value: "3+", label: "Years learning & building" },
@@ -10,6 +12,8 @@ const stats = [
 ];
 
 export default function Hero() {
+  const [resumeOpen, setResumeOpen] = useState(false);
+
   return (
     <section
       id="hero"
@@ -112,14 +116,35 @@ export default function Hero() {
             >
               View projects <ArrowRight size={14} />
             </a>
+            <button
+              onClick={() => setResumeOpen(true)}
+              className="flex items-center gap-2 rounded-full border border-line px-6 py-3 font-mono text-xs uppercase tracking-wider text-ink transition-colors hover:border-signal hover:text-signal"
+            >
+              <Eye size={14} /> Resume
+            </button>
+          </motion.div>
+
+          <Modal
+            open={resumeOpen}
+            onClose={() => setResumeOpen(false)}
+            title="Chandan Singh — Resume"
+            wide
+          >
+            <div className="overflow-hidden rounded-lg border border-line/60">
+              <iframe
+                src={`${profile.resumeFile}#view=FitH`}
+                title="Resume preview"
+                className="h-[65vh] w-full bg-white"
+              />
+            </div>
             <a
               href={profile.resumeFile}
               download
-              className="flex items-center gap-2 rounded-full border border-line px-6 py-3 font-mono text-xs uppercase tracking-wider text-ink transition-colors hover:border-signal hover:text-signal"
+              className="mt-4 flex w-fit items-center gap-2 rounded-full bg-signal px-5 py-2.5 font-mono text-xs uppercase tracking-wider text-void transition-transform hover:-translate-y-0.5"
             >
-              <Download size={14} /> Resume
+              <Download size={14} /> Download PDF
             </a>
-          </motion.div>
+          </Modal>
 
           <motion.p
             initial={{ opacity: 0 }}

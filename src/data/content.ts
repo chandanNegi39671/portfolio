@@ -232,15 +232,36 @@ export const quote = {
   signature: "Chandan",
 };
 
-export const research = [
+export type ResearchPost = {
+  title: string;
+  excerpt: string;
+  readTime: string;
+  body: string[];
+};
+
+export const research: ResearchPost[] = [
   {
     title: "Why uncertainty quantification belongs in every production CV model",
     excerpt:
       "Notes from adding MC Dropout to NikaAI — what changed when the model started saying 'I'm not sure' instead of guessing with false confidence.",
+    readTime: "4 min read",
+    body: [
+      "NikaAI's first working version did exactly what a defect-detection model is supposed to do: it drew a box around a scratch or a crack and moved on. The problem showed up a week later, when it drew a box with just as much confidence around a shadow, a reflection, and a smudge on the camera lens. A supervisor pulling up the app had no way to tell which detections were worth trusting and which weren't — the UI presented all of them with the same visual certainty.",
+      "The fix wasn't a better model. It was admitting the model didn't always know. I added Monte Carlo Dropout — keeping dropout layers active at inference time and running each image through the network multiple times instead of once. The spread across those runs becomes a proxy for confidence: tight agreement means the model is sure, wide disagreement means it's guessing.",
+      "In practice this meant every detection now carries two numbers instead of one: the class probability, and a variance score from the MC Dropout passes. Below a variance threshold, NikaAI flags the detection for human review instead of auto-logging it as a confirmed defect. That single change moved the system from 'trust everything the model says' to 'trust the model, verify the edge cases' — which is the actual bar for something a factory floor will rely on.",
+      "The engineering cost was small — a few extra forward passes per image, batched to stay within latency budgets — but the trust it bought was disproportionate. A model that can say 'I don't know' is a model a supervisor will actually keep turned on.",
+    ],
   },
   {
     title: "Fine-tuning YOLOv8 on messy industrial datasets",
     excerpt:
       "The unglamorous part of Factory Defect Guard: writing a VOC-to-YOLO converter and cleaning 29K images before training even starts.",
+    readTime: "5 min read",
+    body: [
+      "Nobody talks about the annotation format problem until they hit it. Factory Defect Guard combines steel surface, PCB, and MVTec-style industrial imagery — three public sources, three different annotation conventions, and only one of them (loosely) in YOLO's expected format. The other two were in Pascal VOC XML: absolute pixel coordinates, per-image XML files, class names that didn't match across datasets, and a nontrivial number of bounding boxes that were simply wrong — flipped, off by a few pixels in ways that mattered at defect scale, or annotated against an image that had since been resized.",
+      "The unglamorous fix was writing a proper VOC-to-YOLO converter rather than trusting an off-the-shelf script: parsing each XML file, normalizing coordinates against the actual image dimensions (not the ones recorded in the XML, which had drifted for a subset of files), remapping class labels into one consistent taxonomy across all three sources, and rejecting boxes with degenerate width or height before they could quietly poison training.",
+      "Once the ~29,354 images were in a consistent YOLO label format, training YOLOv8s was the easy part. The harder ongoing decision was where to draw the confidence threshold for deployment — the model reaches 78.8% precision and 72.2% recall at the operating point I settled on, and moving that threshold trades false positives (defects flagged that aren't real) against false negatives (real defects missed). For a factory context, the honest answer is that recall matters more than precision — a missed defect costs more than a false alarm a human can dismiss in two seconds.",
+      "The model and inference interface are published on HuggingFace for anyone who wants to try it against their own industrial images — partly because open industrial CV tooling is still thinner than it should be, and partly because the annotation-cleaning code is, unglamorously, the part most worth reusing.",
+    ],
   },
 ];
