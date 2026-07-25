@@ -25,7 +25,7 @@ export default function Footer() {
             <a href="#hero" className="font-display text-lg tracking-tight text-ink">
               CS<span className="text-signal">.</span>
             </a>
-            <p className="mt-1 font-mono text-xs text-ink-faint">
+            <p className="mt-1 font-mono text-xs text-ink-dim">
               AI/ML Engineer · Noida, India
             </p>
           </div>
@@ -36,7 +36,7 @@ export default function Footer() {
               <a
                 key={l.href}
                 href={l.href}
-                className="font-mono text-xs uppercase tracking-wider text-ink-faint transition-colors hover:text-signal"
+                className="font-mono text-xs uppercase tracking-wider text-ink-dim transition-colors hover:text-signal"
               >
                 {l.label}
               </a>
@@ -52,7 +52,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={s.label}
-                className="text-ink-faint transition-colors hover:text-signal"
+                className="text-ink-dim transition-colors hover:text-signal"
               >
                 <s.icon size={17} />
               </a>
@@ -61,7 +61,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-8 border-t border-line/40 pt-6 text-center">
-          <p className="font-mono text-xs text-ink-faint">
+          <p className="font-mono text-xs text-ink-dim">
             © {new Date().getFullYear()} Chandan Singh · Built with React, Vite &amp; Three.js
           </p>
         </div>

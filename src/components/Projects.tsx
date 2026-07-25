@@ -67,7 +67,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               <p className={`font-mono text-xs uppercase tracking-wider ${accent.text}`}>
                 {project.tag}
               </p>
-              <h3 className="mt-1 font-display text-2xl tracking-tight sm:text-3xl">
+              <h3 className="mt-1 font-display text-3xl font-bold tracking-tight sm:text-4xl">
                 {project.name}
               </h3>
             </div>

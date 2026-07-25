@@ -18,8 +18,13 @@ type GhRepo = {
 
 const username = profile.github.split("/").filter(Boolean).pop() ?? "";
 
+// Repos to exclude from the live feed — the portfolio site itself, coursework/
+// assessment tasks, and work-in-progress repos that aren't ready to showcase.
+const EXCLUDED_REPOS = ["portfolio", "mlops-task", "medecho"];
+
 export default function GitHubStats() {
   const [user, setUser] = useState<GhUser | null>(null);
+  const [allRepos, setAllRepos] = useState<GhRepo[]>([]);
   const [repos, setRepos] = useState<GhRepo[]>([]);
   const [status, setStatus] = useState<"loading" | "ok" | "error">("loading");
 
@@ -29,14 +34,16 @@ export default function GitHubStats() {
 
     Promise.all([
       fetch(`https://api.github.com/users/${username}`).then((r) => (r.ok ? r.json() : Promise.reject())),
-      fetch(`https://api.github.com/users/${username}/repos?sort=pushed&per_page=6`).then((r) =>
+      fetch(`https://api.github.com/users/${username}/repos?sort=pushed&per_page=100`).then((r) =>
         r.ok ? r.json() : Promise.reject()
       ),
     ])
       .then(([u, rs]: [GhUser, GhRepo[]]) => {
         if (cancelled) return;
         setUser(u);
-        setRepos(Array.isArray(rs) ? rs.slice(0, 4) : []);
+        const list = Array.isArray(rs) ? rs : [];
+        setAllRepos(list);
+        setRepos(list.filter((r) => !EXCLUDED_REPOS.includes(r.name.toLowerCase())).slice(0, 4));
         setStatus("ok");
       })
       .catch(() => !cancelled && setStatus("error"));
@@ -46,7 +53,7 @@ export default function GitHubStats() {
     };
   }, []);
 
-  const totalStars = repos.reduce((sum, r) => sum + (r.stargazers_count || 0), 0);
+  const totalStars = allRepos.reduce((sum, r) => sum + (r.stargazers_count || 0), 0);
 
   if (status === "error") return null;
 
@@ -102,7 +109,7 @@ export default function GitHubStats() {
               <p className="truncate font-mono text-xs text-ink transition-colors group-hover:text-signal">
                 {r.name}
               </p>
-              <p className="mt-1 flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider text-ink-faint">
+              <p className="mt-1 flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider text-ink-dim">
                 {r.language ?? "—"}
                 {r.stargazers_count > 0 && (
                   <span className="flex items-center gap-0.5">
