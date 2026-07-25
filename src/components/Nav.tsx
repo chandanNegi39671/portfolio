@@ -32,8 +32,14 @@ export default function Nav() {
       }`}
     >
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6">
-        <a href="#hero" className="font-display text-lg tracking-tight text-ink">
-          CS<span className="text-signal">.</span>
+        <a
+          href="#hero"
+          className="flex items-center gap-2.5 font-display text-lg tracking-tight text-ink"
+        >
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-signal/40 bg-signal/10 font-display text-sm font-semibold text-signal">
+            CS
+          </span>
+          <span className="hidden sm:inline">Chandan Singh</span>
         </a>
 
         <ul className="hidden gap-8 md:flex">

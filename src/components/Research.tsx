@@ -6,7 +6,7 @@ export default function Research() {
   return (
     <section id="research" className="relative mx-auto max-w-6xl px-6 py-28">
       <p className="font-mono text-xs uppercase tracking-[0.3em] text-signal">06 — Notes</p>
-      <h2 className="mt-4 max-w-lg font-display text-3xl leading-tight tracking-tight sm:text-4xl">
+      <h2 className="mt-4 max-w-lg font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
         Research &amp; writing
       </h2>
 

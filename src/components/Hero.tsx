@@ -30,17 +30,29 @@ export default function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="font-display text-4xl leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl"
+            className="font-display leading-[0.95] tracking-tight"
           >
-            I train models that
-            <br />
-            <span className="text-gradient">ship, not just demo.</span>
+            <span className="block text-3xl text-ink-dim sm:text-4xl">Hello, I'm</span>
+            <span className="text-gradient block text-6xl sm:text-7xl lg:text-8xl">
+              Chandan Singh
+            </span>
           </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="mt-6 font-display text-xl text-ink sm:text-2xl"
+          >
+            Machine Learning Engineer
+            <br />
+            <span className="text-ink-dim">I train models that ship, not just demo.</span>
+          </motion.p>
 
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+            transition={{ duration: 0.7, delay: 0.25 }}
             className="mt-6 max-w-xl text-base leading-relaxed text-ink-dim sm:text-lg"
           >
             {profile.tagline} Currently a B.Tech CSE student building production

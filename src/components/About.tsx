@@ -7,7 +7,7 @@ export default function About() {
       <div className="grid gap-16 lg:grid-cols-[0.7fr_1.3fr]">
         <div>
           <p className="font-mono text-xs uppercase tracking-[0.3em] text-signal">01 — About</p>
-          <h2 className="mt-4 font-display text-3xl leading-tight tracking-tight sm:text-4xl">
+          <h2 className="mt-4 font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
             Engineer first,
             <br /> ML practitioner always.
           </h2>
