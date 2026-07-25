@@ -18,12 +18,18 @@ export default function Certifications() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.5, delay: i * 0.1 }}
-            className="glass rounded-2xl p-6"
+            className="glass group rounded-2xl border border-line/60 p-6 transition-colors hover:border-signal/50"
           >
-            <Award size={20} className="text-signal" />
-            <h3 className="mt-4 font-display text-base text-ink">{c.name}</h3>
-            <p className="mt-2 font-mono text-xs text-ink-faint">{c.issuer}</p>
-            <p className="mt-1 font-mono text-xs text-ink-faint">{c.year}</p>
+            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-signal/15 text-signal transition-colors group-hover:bg-signal group-hover:text-void">
+              <Award size={20} />
+            </span>
+            <h3 className="mt-5 font-display text-lg font-semibold text-ink">{c.name}</h3>
+            <p className="mt-2 font-mono text-xs uppercase tracking-wider text-ink-faint">
+              {c.issuer}
+            </p>
+            <p className="mt-1 font-mono text-xs uppercase tracking-wider text-signal">
+              {c.year}
+            </p>
           </motion.div>
         ))}
       </div>

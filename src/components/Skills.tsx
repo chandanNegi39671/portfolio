@@ -25,16 +25,17 @@ export default function Skills() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.5, delay: i * 0.06 }}
-            className="glass group rounded-2xl p-6 transition-colors hover:border-signal/40"
+            className="glass group relative overflow-hidden rounded-2xl border border-line/60 p-6 transition-colors hover:border-signal/50"
           >
-            <p className="font-mono text-xs uppercase tracking-wider text-ink-faint">
+            <span className="absolute left-0 top-0 h-full w-1 bg-signal/70 transition-all group-hover:w-1.5" />
+            <p className="font-display text-lg font-semibold uppercase tracking-wide text-ink">
               {g.title}
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               {g.items.map((s) => (
                 <span
                   key={s}
-                  className="rounded-full border border-line px-3 py-1 text-xs text-ink-dim transition-colors group-hover:border-line"
+                  className="rounded-full border border-line px-3 py-1 font-mono text-xs text-ink-dim transition-colors group-hover:border-signal/40 group-hover:text-ink"
                 >
                   {s}
                 </span>

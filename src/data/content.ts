@@ -178,6 +178,11 @@ export const certifications = [
   { name: "AMD ROCm GPU Development", issuer: "AMD AI Hackathon track", year: "2026" },
 ];
 
+export const quote = {
+  text: "A model that can't explain why it's wrong isn't finished — it's just undeployed.",
+  signature: "Chandan",
+};
+
 export const research = [
   {
     title: "Why uncertainty quantification belongs in every production CV model",

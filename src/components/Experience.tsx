@@ -1,32 +1,67 @@
 import { motion } from "framer-motion";
-import { experience } from "../data/content";
+import { Quote } from "lucide-react";
+import { experience, quote } from "../data/content";
 
 export default function Experience() {
   return (
     <section id="experience" className="relative mx-auto max-w-6xl px-6 py-28">
-      <p className="font-mono text-xs uppercase tracking-[0.3em] text-signal">04 — Timeline</p>
+      <p className="font-mono text-xs uppercase tracking-[0.3em] text-signal">04 — Process</p>
       <h2 className="mt-4 max-w-lg font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
         Experience &amp; hackathons
       </h2>
 
-      <div className="mt-14 space-y-0">
-        {experience.map((e, i) => (
-          <motion.div
-            key={e.title}
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.5, delay: i * 0.1 }}
-            className="grid gap-4 border-t border-line/60 py-8 sm:grid-cols-[160px_1fr] sm:gap-8"
-          >
-            <p className="font-mono text-sm text-ink-faint">{e.period}</p>
-            <div>
-              <h3 className="font-display text-xl text-ink">{e.title}</h3>
-              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-dim">{e.detail}</p>
-            </div>
-          </motion.div>
-        ))}
-        <div className="border-t border-line/60" />
+      <div className="mt-14 grid gap-10 lg:grid-cols-[1.5fr_1fr]">
+        {/* Numbered timeline */}
+        <div className="relative">
+          <div className="absolute left-[27px] top-2 bottom-2 w-px bg-line/70" aria-hidden />
+          <div className="space-y-10">
+            {experience.map((e, i) => (
+              <motion.div
+                key={e.title}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="relative flex gap-6"
+              >
+                <span className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 border-signal bg-void font-display text-lg font-bold text-signal">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div className="glass flex-1 rounded-2xl border border-line/60 p-6">
+                  <div className="flex flex-wrap items-baseline justify-between gap-2">
+                    <h3 className="font-display text-xl text-ink">{e.title}</h3>
+                    <p className="font-mono text-xs uppercase tracking-wider text-signal">
+                      {e.period}
+                    </p>
+                  </div>
+                  <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-dim">
+                    {e.detail}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Pull quote panel */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.6 }}
+          className="relative flex flex-col justify-between overflow-hidden rounded-3xl bg-gradient-to-br from-signal-dim to-signal p-8 text-void"
+        >
+          <Quote size={36} className="fill-void/20 text-void/20" />
+          <p className="mt-6 font-display text-2xl font-semibold leading-snug">
+            {quote.text}
+          </p>
+          <div className="mt-8">
+            <p className="font-display text-lg italic">{quote.signature}</p>
+            <p className="mt-4 font-mono text-xs uppercase tracking-wider text-void/70">
+              Let's build something reliable together
+            </p>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

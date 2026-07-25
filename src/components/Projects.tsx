@@ -25,13 +25,18 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
       <div className="relative p-8">
         <div className="flex flex-wrap items-start justify-between gap-4">
-          <div>
-            <p className={`font-mono text-xs uppercase tracking-wider ${accent.text}`}>
-              0{index + 1} — {project.tag}
-            </p>
-            <h3 className="mt-2 font-display text-2xl tracking-tight sm:text-3xl">
-              {project.name}
-            </h3>
+          <div className="flex items-baseline gap-4">
+            <span className={`font-display text-4xl font-bold ${accent.text} sm:text-5xl`}>
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <div>
+              <p className={`font-mono text-xs uppercase tracking-wider ${accent.text}`}>
+                {project.tag}
+              </p>
+              <h3 className="mt-1 font-display text-2xl tracking-tight sm:text-3xl">
+                {project.name}
+              </h3>
+            </div>
           </div>
           <div className="flex gap-3">
             <a
