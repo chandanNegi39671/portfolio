@@ -172,11 +172,66 @@ export const experience = [
   },
 ];
 
-export const certifications = [
-  { name: "Deep Learning Specialization", issuer: "In progress / self-directed", year: "2026" },
-  { name: "TensorFlow & PyTorch Applied Projects", issuer: "Self-directed coursework", year: "2025–26" },
-  { name: "AMD ROCm GPU Development", issuer: "AMD AI Hackathon track", year: "2026" },
+export type Certification = {
+  name: string;
+  issuer: string;
+  year: string;
+  url?: string;
+};
+
+export const certifications: Certification[] = [
+  {
+    name: "Machine Learning & Data Science",
+    issuer: "upGrad — Program Certificate",
+    year: "2025",
+    url: "https://www.upgrad.com/lxp/learner/certificate/program/69037480943812e0566290f0",
+  },
+  {
+    name: "Machine Learning with Python — Level 1",
+    issuer: "IBM (via Credly)",
+    year: "Dec 2025",
+    url: "https://www.credly.com/badges/e1159402-62d1-463b-9d66-9c544e79d38e/linked_in_profile",
+  },
+  {
+    name: "Machine Learning with Python (ML0101EN)",
+    issuer: "IBM · Cognitive Class",
+    year: "Dec 2025",
+    url: "https://courses.cognitiveclass.ai/certificates/9183537c0e634952bff2200a2015665b",
+  },
+  {
+    name: "FREE OpenCV Bootcamp",
+    issuer: "OpenCV University",
+    year: "Jun 2025",
+    url: "https://courses.opencv.org/certificates/fdda972b10b348c681ea09ee4bcf4cd2",
+  },
+  {
+    name: "Learn Python Libraries: NumPy, Matplotlib & Pandas",
+    issuer: "upGrad",
+    year: "Dec 2025",
+  },
+  {
+    name: "Basic Python Programming",
+    issuer: "upGrad",
+    year: "Nov 2025",
+  },
 ];
+
+export const learningLog = {
+  title: "Google Machine Learning Crash Course",
+  url: "https://developers.google.com/machine-learning/crash-course",
+  modules: [
+    "Linear Regression",
+    "Logistic Regression",
+    "Classification",
+    "Numerical Data",
+    "Categorical Data",
+    "Datasets & Generalization",
+    "Neural Networks",
+    "Embeddings",
+    "Large Language Models",
+    "Production ML Systems",
+  ],
+};
 
 export const quote = {
   text: "A model that can't explain why it's wrong isn't finished — it's just undeployed.",
