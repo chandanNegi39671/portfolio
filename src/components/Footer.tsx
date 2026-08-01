@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Github, Linkedin, ExternalLink } from "lucide-react";
 import { profile } from "../data/content";
 
@@ -15,7 +16,44 @@ const navLinks = [
   { href: "#contact", label: "Contact" },
 ];
 
+function useLocalTime() {
+  const [time, setTime] = useState("");
+
+  useEffect(() => {
+    let id = 0;
+    const tick = () =>
+      setTime(
+        new Date().toLocaleTimeString("en-US", {
+          timeZone: "Asia/Kolkata",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
+      );
+
+    const start = () => {
+      tick();
+      id = window.setInterval(tick, 1000);
+    };
+    const stop = () => window.clearInterval(id);
+
+    // Only tick while the tab is visible
+    const onVisibility = () => (document.hidden ? stop() : start());
+
+    start();
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => {
+      stop();
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+  }, []);
+
+  return time;
+}
+
 export default function Footer() {
+  const time = useLocalTime();
+
   return (
     <footer className="relative border-t border-line/60">
       <div className="mx-auto max-w-6xl px-6 py-12">
@@ -28,6 +66,11 @@ export default function Footer() {
             <p className="mt-1 font-mono text-xs text-ink-dim">
               AI/ML Engineer · Noida, India
             </p>
+            {time && (
+              <p className="mt-1 font-mono text-[11px] uppercase tracking-wider text-ink-faint">
+                Local time {time} IST
+              </p>
+            )}
           </div>
 
           {/* nav */}

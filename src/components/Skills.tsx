@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { skills } from "../data/content";
+import SectionHeading from "./SectionHeading";
 
 const groups = [
   { title: "Languages", items: skills.languages },
@@ -12,10 +13,7 @@ const groups = [
 export default function Skills() {
   return (
     <section id="skills" className="relative mx-auto max-w-6xl px-6 py-28">
-      <p className="font-mono text-xs uppercase tracking-[0.3em] text-signal">02 — Stack</p>
-      <h2 className="mt-4 max-w-lg font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-        What's under the hood
-      </h2>
+      <SectionHeading index="02" eyebrow="Stack" title={<>What&apos;s under the hood</>} />
 
       <div className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {groups.map((g, i) => (

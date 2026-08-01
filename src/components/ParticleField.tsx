@@ -20,6 +20,16 @@ export default function ParticleField() {
 
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    const onVisibility = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(raf);
+      } else if (!prefersReduced) {
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(draw);
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+
     let particles: Particle[] = [];
     let width = 0;
     let height = 0;
@@ -71,6 +81,7 @@ export default function ParticleField() {
     }
 
     return () => {
+      document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("resize", resize);
       cancelAnimationFrame(raf);
     };

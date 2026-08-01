@@ -1,4 +1,7 @@
+import ScrollProgress from "./components/ScrollProgress";
+import CursorGlow from "./components/CursorGlow";
 import ParticleField from "./components/ParticleField";
+import SkillMarquee from "./components/SkillMarquee";
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -11,10 +14,13 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Terminal from "./components/Terminal";
 import CommandPalette from "./components/CommandPalette";
+import BackToTop from "./components/BackToTop";
 
 export default function App() {
   return (
     <div className="grain relative min-h-screen bg-void text-ink">
+      <ScrollProgress />
+      <CursorGlow />
       <ParticleField />
 
       <div className="relative z-10">
@@ -22,11 +28,7 @@ export default function App() {
 
         <main>
           <Hero />
-
-          {/* subtle divider */}
-          <div className="mx-auto max-w-6xl px-6">
-            <div className="h-px bg-gradient-to-r from-transparent via-line to-transparent" />
-          </div>
+          <SkillMarquee />
 
           <About />
 
@@ -72,6 +74,7 @@ export default function App() {
 
       <Terminal />
       <CommandPalette />
+      <BackToTop />
     </div>
   );
 }

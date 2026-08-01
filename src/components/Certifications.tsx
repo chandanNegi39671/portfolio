@@ -1,14 +1,12 @@
 import { motion } from "framer-motion";
 import { Award, CheckCircle2, ExternalLink } from "lucide-react";
 import { certifications, learningLog } from "../data/content";
+import SectionHeading from "./SectionHeading";
 
 export default function Certifications() {
   return (
     <section id="certifications" className="relative mx-auto max-w-6xl px-6 py-28">
-      <p className="font-mono text-xs uppercase tracking-[0.3em] text-signal">05 — Credentials</p>
-      <h2 className="mt-4 max-w-lg font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-        Certifications
-      </h2>
+      <SectionHeading index="05" eyebrow="Credentials" title="Certifications" />
 
       <div className="mt-14 grid gap-4 sm:grid-cols-3">
         {certifications.map((c, i) => {

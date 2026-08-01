@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, ArrowRight, Download, Eye, Sparkles } from "lucide-react";
 import profileImg from "../assets/profile-cutout.png";
 import { profile } from "../data/content";
 import Modal from "./Modal";
+import NeuralCore from "./three/NeuralCore";
 
 const stats = [
   { value: "3+", label: "Years learning & building" },
@@ -11,8 +12,42 @@ const stats = [
   { value: "95%+", label: "Peak model accuracy" },
 ];
 
+const ROLES = [
+  "Machine Learning Engineer",
+  "Computer Vision Builder",
+  "AI Systems Architect",
+];
+
 export default function Hero() {
   const [resumeOpen, setResumeOpen] = useState(false);
+
+  // Typewriter for the rotating role line
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [roleText, setRoleText] = useState("");
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) {
+      setRoleText(ROLES[0]);
+      return;
+    }
+    const current = ROLES[roleIndex % ROLES.length];
+    let timeout: number;
+    if (!deleting && roleText.length < current.length) {
+      timeout = window.setTimeout(() => setRoleText(current.slice(0, roleText.length + 1)), 55);
+    } else if (!deleting && roleText.length === current.length) {
+      timeout = window.setTimeout(() => setDeleting(true), 2000);
+    } else if (deleting && roleText.length > 0) {
+      timeout = window.setTimeout(() => setRoleText(current.slice(0, roleText.length - 1)), 26);
+    } else {
+      timeout = window.setTimeout(() => {
+        setDeleting(false);
+        setRoleIndex((i) => (i + 1) % ROLES.length);
+      }, 350);
+    }
+    return () => window.clearTimeout(timeout);
+  }, [roleText, deleting, roleIndex]);
 
   return (
     <section
@@ -27,6 +62,14 @@ export default function Hero() {
       </div>
       <div className="absolute inset-0 -z-20 bg-gradient-to-b from-void via-void/95 to-void" />
       <div className="absolute left-1/2 top-1/4 -z-10 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-signal/10 blur-[140px]" />
+
+      {/* Ambient 3D neural core */}
+      <div
+        className="pointer-events-none absolute -right-32 top-1/2 hidden h-[600px] w-[600px] -translate-y-1/2 opacity-50 lg:block"
+        aria-hidden="true"
+      >
+        <NeuralCore />
+      </div>
 
       {/* Top bar */}
       <div className="mx-auto flex w-full max-w-6xl flex-wrap items-start justify-between gap-3 px-6">
@@ -88,9 +131,14 @@ export default function Hero() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="mt-5 font-display text-lg font-semibold uppercase tracking-wide text-signal"
+            className="mt-5 flex min-h-7 items-center font-display text-lg font-semibold uppercase tracking-wide text-signal sm:text-xl"
+            aria-hidden="true"
           >
-            Machine Learning Engineer &amp; AI Builder
+            <span>{roleText}</span>
+            <span
+              className="ml-1.5 inline-block h-[1.1em] w-[2px] animate-pulse bg-signal"
+              aria-hidden="true"
+            />
           </motion.p>
 
           <motion.p

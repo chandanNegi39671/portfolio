@@ -5,13 +5,20 @@ export default function About() {
   return (
     <section id="about" className="relative mx-auto max-w-6xl px-6 py-28">
       <div className="grid gap-16 lg:grid-cols-[0.7fr_1.3fr]">
-        <div>
-          <p className="font-mono text-xs uppercase tracking-[0.3em] text-signal">01 — About</p>
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <p className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.3em] text-signal">
+            <span className="text-ink-faint">01</span> — About
+          </p>
           <h2 className="mt-4 font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
             Engineer first,
             <br /> ML practitioner always.
           </h2>
-        </div>
+        </motion.div>
 
         <div>
           <motion.p

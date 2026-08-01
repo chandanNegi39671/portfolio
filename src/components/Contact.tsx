@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink } from "lucide-react";
+import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Check } from "lucide-react";
 import { profile } from "../data/content";
 
 const links = [
@@ -24,6 +25,20 @@ const links = [
 ];
 
 export default function Contact() {
+  const [copied, setCopied] = useState(false);
+
+  const copyEmail = async (e: React.MouseEvent) => {
+    try {
+      await navigator.clipboard.writeText(profile.email);
+      // Only swallow the default navigation once we've actually copied
+      e.preventDefault();
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1800);
+    } catch {
+      // Clipboard unavailable — let the mailto link navigate as a fallback
+    }
+  };
+
   return (
     <section id="contact" className="relative mx-auto max-w-6xl px-6 py-28">
       {/* ambient glow */}
@@ -32,8 +47,14 @@ export default function Contact() {
       <div className="relative grid gap-16 lg:grid-cols-[0.9fr_1.1fr]">
         {/* left */}
         <div>
-          <p className="font-mono text-xs uppercase tracking-[0.3em] text-signal">
-            07 — Contact
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          >
+          <p className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.3em] text-signal">
+            <span className="text-ink-faint">07</span> — Contact
           </p>
           <h2 className="mt-4 font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
             Let's build something
@@ -45,16 +66,28 @@ export default function Contact() {
             production-grade AI/ML systems, computer vision, or anything that
             involves getting a model out of a notebook and into the real world.
           </p>
+        </motion.div>
 
           <div className="mt-10 space-y-4">
             <a
               href={`mailto:${profile.email}`}
+              onClick={copyEmail}
+              title="Click to copy"
               className="group flex items-center gap-4 text-ink-dim transition-colors hover:text-signal"
             >
               <div className="glass flex h-10 w-10 items-center justify-center rounded-full">
                 <Mail size={16} />
               </div>
-              <span className="font-mono text-sm">{profile.email}</span>
+              <span className="flex items-center gap-2 font-mono text-sm">
+                {copied ? "Copied to clipboard!" : profile.email}
+                {copied ? (
+                  <Check size={14} className="text-signal" />
+                ) : (
+                  <span className="hidden text-[10px] uppercase tracking-wider text-ink-faint group-hover:inline">
+                    copy
+                  </span>
+                )}
+              </span>
             </a>
 
             <a

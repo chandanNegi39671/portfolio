@@ -1,14 +1,16 @@
 import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
 import { experience, quote } from "../data/content";
+import SectionHeading from "./SectionHeading";
 
 export default function Experience() {
   return (
     <section id="experience" className="relative mx-auto max-w-6xl px-6 py-28">
-      <p className="font-mono text-xs uppercase tracking-[0.3em] text-signal">04 — Process</p>
-      <h2 className="mt-4 max-w-lg font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-        Experience &amp; hackathons
-      </h2>
+      <SectionHeading
+        index="04"
+        eyebrow="Process"
+        title={<>Experience &amp; hackathons</>}
+      />
 
       <div className="mt-14 grid gap-10 lg:grid-cols-[1.5fr_1fr]">
         {/* Numbered timeline */}

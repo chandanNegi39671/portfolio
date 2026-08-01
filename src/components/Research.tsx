@@ -3,16 +3,18 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, Clock } from "lucide-react";
 import { research, type ResearchPost } from "../data/content";
 import Modal from "./Modal";
+import SectionHeading from "./SectionHeading";
 
 export default function Research() {
   const [active, setActive] = useState<ResearchPost | null>(null);
 
   return (
     <section id="research" className="relative mx-auto max-w-6xl px-6 py-28">
-      <p className="font-mono text-xs uppercase tracking-[0.3em] text-signal">06 — Notes</p>
-      <h2 className="mt-4 max-w-lg font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-        Research &amp; writing
-      </h2>
+      <SectionHeading
+        index="06"
+        eyebrow="Notes"
+        title={<>Research &amp; writing</>}
+      />
 
       <div className="mt-14 grid gap-6 md:grid-cols-2">
         {research.map((r, i) => (

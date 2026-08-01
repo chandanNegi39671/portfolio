@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, Github, ChevronDown } from "lucide-react";
 import { projects, type Project } from "../data/content";
 import GitHubStats from "./GitHubStats";
+import SectionHeading from "./SectionHeading";
 
 const accentMap = {
   signal: { text: "text-signal", border: "hover:border-signal/50", glow: "bg-signal/10" },
@@ -53,7 +54,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.55, delay: index * 0.08 }}
-      className={`glass relative overflow-hidden rounded-3xl border border-line/60 transition-colors ${accent.border}`}
+      whileHover={{ y: -6, transition: { duration: 0.25, ease: "easeOut" } }}
+      className={`glass group relative overflow-hidden rounded-3xl border border-line/60 transition-colors ${accent.border}`}
     >
       <div className={`pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full ${accent.glow} blur-3xl`} />
 
@@ -170,14 +172,12 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 export default function Projects() {
   return (
     <section id="projects" className="relative mx-auto max-w-6xl px-6 py-28">
-      <p className="font-mono text-xs uppercase tracking-[0.3em] text-signal">03 — Work</p>
-      <h2 className="mt-4 max-w-lg font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-        Featured projects
-      </h2>
-      <p className="mt-4 max-w-xl text-ink-dim">
-        Four systems, four different failure modes solved — perception, reasoning,
-        trust, and real-time constraints.
-      </p>
+      <SectionHeading
+        index="03"
+        eyebrow="Work"
+        title="Featured projects"
+        subtitle="Four systems, four different failure modes solved — perception, reasoning, trust, and real-time constraints."
+      />
 
       <div className="mt-14">
         <GitHubStats />

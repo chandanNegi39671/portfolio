@@ -12,14 +12,34 @@ const links = [
   { href: "#contact", label: "Contact" },
 ];
 
+const sectionIds = links.map((l) => l.href.slice(1));
+
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState("");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Scroll-spy: highlight the section currently in view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: "-35% 0px -60% 0px" }
+    );
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -43,16 +63,29 @@ export default function Nav() {
         </a>
 
         <ul className="hidden gap-8 md:flex">
-          {links.map((l) => (
-            <li key={l.href}>
-              <a
-                href={l.href}
-                className="font-mono text-xs uppercase tracking-wider text-ink-dim transition-colors hover:text-signal"
-              >
-                {l.label}
-              </a>
-            </li>
-          ))}
+          {links.map((l) => {
+            const isActive = active === l.href.slice(1);
+            return (
+              <li key={l.href} className="relative">
+                <a
+                  href={l.href}
+                  aria-current={isActive ? "true" : undefined}
+                  className={`font-mono text-xs uppercase tracking-wider transition-colors hover:text-signal ${
+                    isActive ? "text-signal" : "text-ink-dim"
+                  }`}
+                >
+                  {l.label}
+                </a>
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-active"
+                    className="absolute -bottom-1.5 left-1/2 h-0.5 w-5 -translate-x-1/2 rounded-full bg-signal"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </li>
+            );
+          })}
         </ul>
 
         <a
@@ -66,6 +99,8 @@ export default function Nav() {
           className="text-ink md:hidden"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
+          aria-expanded={open}
+          aria-controls="mobile-nav"
         >
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
@@ -73,6 +108,7 @@ export default function Nav() {
 
       {open && (
         <motion.ul
+          id="mobile-nav"
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: "auto", opacity: 1 }}
           className="glass mx-6 mt-3 flex flex-col gap-1 rounded-2xl p-4 md:hidden"

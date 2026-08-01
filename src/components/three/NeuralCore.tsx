@@ -1,4 +1,4 @@
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -90,9 +90,18 @@ function CoreMesh() {
 }
 
 export default function NeuralCore() {
+  // Stop rendering the WebGL loop when the tab is hidden
+  const [frameloop, setFrameloop] = useState<"always" | "never">("always");
+
+  useEffect(() => {
+    const onVisibility = () => setFrameloop(document.hidden ? "never" : "always");
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => document.removeEventListener("visibilitychange", onVisibility);
+  }, []);
+
   return (
     <div className="absolute inset-0" aria-hidden="true">
-      <Canvas camera={{ position: [0, 0, 6.2], fov: 45 }} dpr={[1, 1.5]}>
+      <Canvas frameloop={frameloop} camera={{ position: [0, 0, 6.2], fov: 45 }} dpr={[1, 1.5]}>
         <ambientLight intensity={0.4} />
         <pointLight position={[5, 5, 5]} intensity={1.2} color="#5eead4" />
         <pointLight position={[-5, -3, -5]} intensity={0.8} color="#a78bfa" />
