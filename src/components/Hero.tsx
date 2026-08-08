@@ -158,7 +158,7 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.4 }}
             className="mt-8 flex flex-wrap items-center gap-4"
           >
-            
+            <a
               href="#projects"
               className="flex items-center gap-2 rounded-full bg-signal px-6 py-3 font-mono text-xs uppercase tracking-wider text-void transition-transform hover:-translate-y-0.5 hover:shadow-[0_0_30px_rgba(239,68,68,0.35)]"
             >
@@ -185,7 +185,7 @@ export default function Hero() {
                 className="h-[65vh] w-full bg-white"
               />
             </div>
-            
+            <a
               href={profile.resumeFile}
               download
               className="mt-4 flex w-fit items-center gap-2 rounded-full bg-signal px-5 py-2.5 font-mono text-xs uppercase tracking-wider text-void transition-transform hover:-translate-y-0.5"
