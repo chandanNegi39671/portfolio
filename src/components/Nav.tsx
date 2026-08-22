@@ -1,0 +1,131 @@
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
+
+const links = [
+  { href: "#about", label: "About" },
+  { href: "#skills", label: "Skills" },
+  { href: "#projects", label: "Projects" },
+  { href: "#experience", label: "Experience" },
+  { href: "#certifications", label: "Certs" },
+  { href: "#research", label: "Research" },
+  { href: "#contact", label: "Contact" },
+];
+
+const sectionIds = links.map((l) => l.href.slice(1));
+
+export default function Nav() {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState("");
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Scroll-spy: highlight the section currently in view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: "-35% 0px -60% 0px" }
+    );
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <motion.header
+      initial={{ y: -40, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled ? "glass py-3" : "py-5 bg-transparent"
+      }`}
+    >
+      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6">
+        <a
+          href="#hero"
+          className="flex items-center gap-2.5 font-display text-lg tracking-tight text-ink"
+        >
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-signal/40 bg-signal/10 font-display text-sm font-semibold text-signal">
+            CS
+          </span>
+          <span className="hidden sm:inline">Chandan Singh</span>
+        </a>
+
+        <ul className="hidden gap-8 md:flex">
+          {links.map((l) => {
+            const isActive = active === l.href.slice(1);
+            return (
+              <li key={l.href} className="relative">
+                <a
+                  href={l.href}
+                  aria-current={isActive ? "true" : undefined}
+                  className={`font-mono text-xs uppercase tracking-wider transition-colors hover:text-signal ${
+                    isActive ? "text-signal" : "text-ink-dim"
+                  }`}
+                >
+                  {l.label}
+                </a>
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-active"
+                    className="absolute -bottom-1.5 left-1/2 h-0.5 w-5 -translate-x-1/2 rounded-full bg-signal"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </li>
+            );
+          })}
+        </ul>
+
+        <a
+          href="#contact"
+          className="hidden rounded-full border border-line px-4 py-2 font-mono text-xs uppercase tracking-wider text-ink transition-colors hover:border-signal hover:text-signal md:block"
+        >
+          Let's talk
+        </a>
+
+        <button
+          className="text-ink md:hidden"
+          onClick={() => setOpen(!open)}
+          aria-label="Toggle menu"
+          aria-expanded={open}
+          aria-controls="mobile-nav"
+        >
+          {open ? <X size={22} /> : <Menu size={22} />}
+        </button>
+      </nav>
+
+      {open && (
+        <motion.ul
+          id="mobile-nav"
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: "auto", opacity: 1 }}
+          className="glass mx-6 mt-3 flex flex-col gap-1 rounded-2xl p-4 md:hidden"
+        >
+          {links.map((l) => (
+            <li key={l.href}>
+              <a
+                href={l.href}
+                onClick={() => setOpen(false)}
+                className="block rounded-lg px-3 py-2 font-mono text-xs uppercase tracking-wider text-ink-dim hover:bg-surface-2 hover:text-signal"
+              >
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </motion.ul>
+      )}
+    </motion.header>
+  );
+}
